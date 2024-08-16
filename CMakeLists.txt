@@ -35,8 +35,8 @@ list(APPEND _noahmp_files src/module_sf_noahmplsm.F90
 # Find dependencies
 find_package(MPI REQUIRED)
 find_package(NetCDF REQUIRED)
-if (TARGET esmf)
-  message("Target esmf is already found. Skip find_package ...")
+if (TARGET ESMF::ESMF)
+  message("Target ESMF::ESMF is already found. Skip find_package ...")
 else()
   set(USE_ESMF_STATIC_LIBS TRUE)
   find_package(ESMF REQUIRED)
@@ -73,7 +73,7 @@ set_target_properties(noahmp PROPERTIES
 )
 target_include_directories(noahmp PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
                                          $<INSTALL_INTERFACE:include>)
-target_link_libraries(noahmp PUBLIC esmf fms)
+target_link_libraries(noahmp PUBLIC ESMF::ESMF fms)
 
 #------------------------------------------------------------------------------
 # CMake export for ESMX driver
@@ -100,4 +100,4 @@ install(
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 install(EXPORT noahmp
-	DESTINATION lib/cmake)
+  DESTINATION lib/cmake)
